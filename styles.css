@@ -17,7 +17,8 @@
   input[type="text"],
   input[type="email"],
   input[type="tel"],
-  textarea {
+  textarea,
+  input[type="url"] {
     width: 100%;
     margin-bottom: 10px;
     padding: 5px;
@@ -35,5 +36,33 @@
   
   button:hover {
     background-color: #0056b3;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  #resumeContainer {
+    margin-top: 20px;
+  }
+  
+  #resumeHeader {
+    display: flex;
+    align-items: center;
+  }
+  
+  #resumeImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  #resumeInfo p {
+    margin: 5px 0;
+  }
+  
+  #resumeContent > div {
+    margin-bottom: 20px;
   }
   

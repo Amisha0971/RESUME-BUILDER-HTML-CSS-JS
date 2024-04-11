@@ -1,30 +1,43 @@
-document.getElementById('resumeForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+document.getElementById('generateBtn').addEventListener('click', function() {
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const summary = document.getElementById('summary').value;
+    const experience = document.getElementById('experience').value;
+    const education = document.getElementById('education').value;
+    const website = document.getElementById('website').value;
+    const imageInput = document.getElementById('imageInput');
+    const image = document.getElementById('resumeImage');
+  
+    // Set resume content
+    document.getElementById('resumeName').textContent = fullName;
+    document.getElementById('resumeEmail').textContent = "Email: " + email;
+    document.getElementById('resumePhone').textContent = "Phone: " + phone;
+    document.getElementById('resumeSummary').textContent = summary;
+    document.getElementById('resumeExperience').textContent = experience;
+    document.getElementById('resumeEducation').textContent = education;
+    document.getElementById('resumeWebsite').innerHTML = website ? `Website: <a href="${website}" target="_blank">${website}</a>` : '';
+  
+    // Set resume image
+    if (imageInput.files && imageInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        image.src = e.target.result;
+      };
+      reader.readAsDataURL(imageInput.files[0]);
+    } else {
+      image.src = '#';
+    }
+  
+    // Show generated resume
+    document.getElementById('formContainer').classList.add('hidden');
+    document.getElementById('resumeContainer').classList.remove('hidden');
+  });
+  
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    const resumeContainer = document.getElementById('resumeContainer');
+    const filename = 'resume.pdf';
     
-    // Gather form data
-    const formData = {
-      fullName: document.getElementById('fullName').value,
-      email: document.getElementById('email').value,
-      phone: document.getElementById('phone').value,
-      summary: document.getElementById('summary').value,
-      experience: document.getElementById('experience').value,
-      education: document.getElementById('education').value
-    };
-    
-    // Generate HTML for resume output
-    const resumeHTML = `
-      <h2>${formData.fullName}</h2>
-      <p>Email: ${formData.email}</p>
-      <p>Phone: ${formData.phone}</p>
-      <h3>Summary</h3>
-      <p>${formData.summary}</p>
-      <h3>Experience</h3>
-      <p>${formData.experience}</p>
-      <h3>Education</h3>
-      <p>${formData.education}</p>
-    `;
-    
-    // Display generated resume
-    document.getElementById('resumeOutput').innerHTML = resumeHTML;
+    html2pdf().from(resumeContainer).toPdf().save(filename);
   });
   
